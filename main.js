@@ -4,6 +4,10 @@ let min = 0
 let twoPokemon = []
 let twoPokemonTypes = []
 let strengthBonus = 1.5
+let dropDown1 = document.getElementById('choice1');
+let dropDown2 = document.getElementById('choice2');
+let allPoke = []
+
 
 window.onload = function() {
   getPokemon()
@@ -16,14 +20,17 @@ const randomPokeGen = () => {
 }
 
 const getPokemon = () => {
-  let allPoke = []
-  let dropDown1 = document.getElementById('choice1');
-  let dropDown2 = document.getElementById('choice2');
-  let newDefault1 = new Option('Select Pokemon', null, true, true)
-  let newDefault2 = new Option('Select Pokemon', null, true, true)
-  // newDefault1.disabled = true
-  dropDown1.add(newDefault1)
-  dropDown2.add(newDefault2)
+  allPoke = []
+
+
+
+
+
+  // let newDefault1 = new Option('Select Pokemon', null, true, true)
+  // let newDefault2 = new Option('Select Pokemon', null, true, true)
+  // // newDefault1.disabled = true
+  // dropDown1.appendChild(newDefault1)
+  // dropDown2.appendChild(newDefault2)
 
   
   fetch(`https://pokeapi.co/api/v2/pokemon?&limit=500`)
@@ -34,20 +41,39 @@ const getPokemon = () => {
     })
     .then(pokemon => allPoke = pokemon.results)
     .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()]))
-    .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()]))
+    .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()])) 
+    .then(pokemon => dropDown1.appendChild(new Option(twoPokemon[0].name, JSON.stringify(twoPokemon[0]))))
+    .then(pokemon => dropDown2.appendChild(new Option(twoPokemon[1].name, JSON.stringify(twoPokemon[1]))))
     .then(pokemon => getPokemonDetails())
     .catch(err => console.log(`Error,  ${err}`))
     .then(pokemon => {
       allPoke.forEach(pokemon => {
-        let option = new Option(pokemon.name)
-        console.log(option)
-        dropDown1.add(option)
-        dropDown2.add(option)
+        let option1 = new Option(pokemon.name, JSON.stringify(pokemon))
+        let option2 = new Option(pokemon.name, JSON.stringify(pokemon))
+        dropDown1.appendChild(option1)
+        dropDown2.appendChild(option2)
+        console.log(option2)
       });
 
   });
     
 }
+
+
+const testOptions = () => {
+  console.log(JSON.parse(dropDown1.value))
+}
+
+const changeValue = () => { 
+  console.log("changing value")
+  console.log(JSON.parse(dropDown1.value))
+  twoPokemon[0] = JSON.parse(dropDown1.value)
+  twoPokemon[1] = JSON.parse(dropDown2.value)
+  console.log(twoPokemon[0].url)
+  getPokemonDetails()
+}
+
+
 
 const getPokemonAgain = () => {
   twoPokemon = []
@@ -58,11 +84,14 @@ const getPokemonAgain = () => {
   getPokemonDetails()
   stats1.innerHTML = ""
   stats2.innerHTML = ""
-    
+  dropDown1.value = JSON.stringify(twoPokemon[0])
+  dropDown2.value = JSON.stringify(twoPokemon[1])
 }
 
 
 const getPokemonDetails = () => {
+  console.log(twoPokemon)
+
   for (let i = 0; i < twoPokemon.length; i++) {
     fetch(twoPokemon[i].url)
     .then(res => {
@@ -84,8 +113,10 @@ const getPokemonDetails = () => {
   
 }
 
-const displayStats = (pokemon, id) => {
+const displayStats = (pokemon, id) => { //remove elements before adding more
   const stats = document.getElementById(`stats${id}`)
+  stats.innerHTML = ''
+
   for (let i = 0; i < pokemon.stats.length; i++) {
     const li = document.createElement('li')
     const text = document.createTextNode(`${pokemon.stats[i].stat.name}:  ${pokemon.stats[i].base_stat}`)
