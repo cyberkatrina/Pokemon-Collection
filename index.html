@@ -4,25 +4,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="main.js" defer></script>
+  <link rel="stylesheet" href="styles.css" class="style">
 </head>
 <body>
   <button onclick="logGoodPokemon()">logFetch</button>
   <button onclick="getPokemonAgain()">Choose Two New Pokemon</button>
   <button onclick="compareTwoBasic()">Compare Chosen Pokemon(Basic)</button>
   <button onclick="compareTwoAdvanced()">Compare Chosen Pokemon(Advanced)</button>
-  <div class="pics">
-    <h2>Pokemon One</h2>
-    <img src="" id="poke1">
-    <div>
-      <h3>All Stats</h3>
-      <ul id='stats1'></ul>
-    </div>
+  <div class="flex">
+    <div class="1">
+      <h2>Pokemon One</h2>
+      <select name="choice1" id="choice1"></select>
+      <img src="" id="poke1">
+      <div>
+        <h3>All Stats</h3>
+        <ul id='stats1'></ul>
+      </div>
+  </div>
+  <div class="2">
     <h2>Pokemon Two</h2>
+    <select name="choice2" id="choice2"></select>
     <img src="" id="poke2">
     <div>
       <h3>All Stats</h3>
       <ul id='stats2'></ul>
     </div>
   </div>
+  </flex>
 </body>
 </html>

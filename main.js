@@ -1,10 +1,9 @@
 
-let max = 1300
+let max = 500
 let min = 0
 let twoPokemon = []
 let twoPokemonTypes = []
 let strengthBonus = 1.5
-let allPoke = []
 
 window.onload = function() {
   getPokemon()
@@ -17,7 +16,17 @@ const randomPokeGen = () => {
 }
 
 const getPokemon = () => {
-  fetch(`https://pokeapi.co/api/v2/pokemon?&limit=1300`)
+  let allPoke = []
+  let dropDown1 = document.getElementById('choice1');
+  let dropDown2 = document.getElementById('choice2');
+  let newDefault1 = new Option('Select Pokemon', null, true, true)
+  let newDefault2 = new Option('Select Pokemon', null, true, true)
+  // newDefault1.disabled = true
+  dropDown1.add(newDefault1)
+  dropDown2.add(newDefault2)
+
+  
+  fetch(`https://pokeapi.co/api/v2/pokemon?&limit=500`)
     .then(res => {
       if(!res.ok) {
         throw Error(res.statusText)
@@ -28,6 +37,15 @@ const getPokemon = () => {
     .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()]))
     .then(pokemon => getPokemonDetails())
     .catch(err => console.log(`Error,  ${err}`))
+    .then(pokemon => {
+      allPoke.forEach(pokemon => {
+        let option = new Option(pokemon.name)
+        console.log(option)
+        dropDown1.add(option)
+        dropDown2.add(option)
+      });
+
+  });
     
 }
 
@@ -98,8 +116,9 @@ const getTypeDetails = (pokemon, index) => {
 
 }
 
-const logGoodPokemon = () => {
-  console.log(twoPokemon)
+const logFetch = () => {
+  // console.log(twoPokemon)
+  console.log(allPoke)
 }
 
 
