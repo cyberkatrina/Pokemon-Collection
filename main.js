@@ -1,32 +1,50 @@
 
 let max = 1300
 let min = 0
-let randomPokeNum
-let twoPokemon
+let twoPokemon = []
 let twoPokemonTypes = []
 let strengthBonus = 1.5
+let allPoke = []
 
+window.onload = function() {
+  getPokemon()
+  randomPokeGen()
+}
 
 const randomPokeGen = () => {
-  randomPokeNum = Math.floor(Math.random() * (max - min + 1) + min);
+  let randomPokeNum = Math.floor(Math.random() * max);
+  return randomPokeNum
 }
-randomPokeGen()
 
 const getPokemon = () => {
-  fetch(`https://pokeapi.co/api/v2/pokemon?limit=2&offset=${randomPokeNum}`)
+  fetch(`https://pokeapi.co/api/v2/pokemon?&limit=1300`)
     .then(res => {
       if(!res.ok) {
         throw Error(res.statusText)
       } return res.json()
     })
-    .then(pokemon => twoPokemon = pokemon.results)
+    .then(pokemon => allPoke = pokemon.results)
+    .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()]))
+    .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()]))
     .then(pokemon => getPokemonDetails())
-
-
+    .catch(err => console.log(`Error,  ${err}`))
+    
 }
-getPokemon()
 
-getPokemonDetails = () => {
+const getPokemonAgain = () => {
+  twoPokemon = []
+  let stats1 = document.getElementById("stats1")
+  let stats2 = document.getElementById("stats2")
+  twoPokemon.push(allPoke[randomPokeGen()])
+  twoPokemon.push(allPoke[randomPokeGen()])
+  getPokemonDetails()
+  stats1.innerHTML = ""
+  stats2.innerHTML = ""
+    
+}
+
+
+const getPokemonDetails = () => {
   for (let i = 0; i < twoPokemon.length; i++) {
     fetch(twoPokemon[i].url)
     .then(res => {
@@ -34,19 +52,36 @@ getPokemonDetails = () => {
         throw Error(res.statusText)
       } return res.json()
     })
+    
     .then(pokemon => twoPokemon[i] = pokemon)
     .then(pokemon => getTypeDetails(pokemon, i))
-
+    .then(pokemon => poke1.src = twoPokemon[0].sprites.front_default)
+    .then(pokemon => poke2.src = twoPokemon[1].sprites.front_default)
+    .then(pokemon => displayStats(twoPokemon[0], 1))
+    .then(pokemon => displayStats(twoPokemon[1], 2))
+    .catch(err => console.log(`Error,  ${err}`))
     
 
   }
   
 }
 
+const displayStats = (pokemon, id) => {
+  const stats = document.getElementById(`stats${id}`)
+  for (let i = 0; i < pokemon.stats.length; i++) {
+    const li = document.createElement('li')
+    const text = document.createTextNode(`${pokemon.stats[i].stat.name}:  ${pokemon.stats[i].base_stat}`)
+    li.appendChild(text)
+    stats.append(li)
+  }
+}
+
 
 const getTypeDetails = (pokemon, index) => {
+  if (!twoPokemon[0].sprites.front_default || !twoPokemon[1].sprites.front_default) {
+    getPokemon()
+  }
   let pokeA = pokemon.types
-  // let pokeB = twoPokemon[1].types
   for (let i = 0; i < pokeA.length; i++) {
     fetch(pokeA[i].type.url)
     .then(res => {
@@ -56,35 +91,11 @@ const getTypeDetails = (pokemon, index) => {
     })
     .then(types => pokeA = types)
     .then(types => twoPokemonTypes[index] = types)
+    .catch(err => console.log(`Error,  ${err}`))
 
   }
-  // for (let i = 0; i < pokeB.length; i++) {
-  //   fetch(pokeB[i].type.url)
-  //   .then(res => {
-  //     if(!res.ok) {
-  //       throw Error(res.statusText)
-  //     } return res.json()
-  //   })
-  //   .then(types => pokeB = types)
-  //   .then(types => twoPokemonTypes[1] = types)
-  // }
+  
 
-}
-
-
-
-const refetchPokemon = () => {
-  randomPokeGen()
-  getPokemon()
-  console.log("Two new pokemon chosen")
-}
-
-
-
-const logFetch = () => {
-  randomPokeGen()
-  console.log(randomPokeNum)
-  console.log(twoPokemon)
 }
 
 const logGoodPokemon = () => {
@@ -106,7 +117,17 @@ const compareTwoBasic = () => {
   console.log(aPower + " vs " + bPower)
   if (aPower > bPower) {
     console.log(twoPokemon[0].name + "is stronger than " + twoPokemon[1].name)
+    poke2.src = "https://i.gifer.com/YQDj.gif"
+    setTimeout(
+      function(){ 
+        poke2.src="";
+      }, 2000);
   } else if (aPower < bPower) {
+    poke1.src = "https://i.gifer.com/YQDj.gif"
+    setTimeout(
+      function(){ 
+        poke1.src="";
+      }, 2000);
     console.log(twoPokemon[1].name + "is stronger than " + twoPokemon[0].name)
   } else {
     console.log(twoPokemon[0].name + "is just as strong as " + twoPokemon[0].name)
@@ -174,7 +195,9 @@ const compareTwoAdvanced = () => {
   console.log(aPower + " vs " + bPower)
   if (aPower > bPower) {
     console.log(twoPokemon[0].name + " is stronger than " + twoPokemon[1].name)
+    poke2.src = "https://i.gifer.com/YQDj.gif"
   } else if (aPower < bPower) {
+    poke1.src = "https://i.gifer.com/YQDj.gif"
     console.log(twoPokemon[1].name + " is stronger than " + twoPokemon[0].name)
   } else {
     console.log(twoPokemon[0].name + " is just as strong as " + twoPokemon[0].name)
