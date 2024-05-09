@@ -7,6 +7,7 @@ let dropDown1 = document.getElementById('choice1');
 let dropDown2 = document.getElementById('choice2');
 let allPoke = []
 let explosionGif = "https://media.tenor.com/P6RWJwQW_YsAAAAi/explosion-gif.gif"
+let skullImg = "./pixel-skull.png"
 let result = document.getElementById("result")
 let name1 = document.getElementById("name1")
 let name2 = document.getElementById("name2")
@@ -14,6 +15,10 @@ let type1 = document.getElementById("type1")
 let type2 = document.getElementById("type2")
 let stats1 = document.getElementById("stats1")
 let stats2 = document.getElementById("stats2")
+let totalElementOne = document.getElementById("total-one")
+let totalElementTwo = document.getElementById("total-two")
+let timeouts = []
+
 
 
 window.onload = function() {
@@ -137,6 +142,9 @@ const changeValue = () => {
   name1.innerHTML = twoPokemon[0].name
   name2.innerHTML = twoPokemon[1].name
   getPokemonDetails()
+  document.getElementById("result").innerHTML = 'Which Pokemon is stronger?'
+  totalElementOne.innerHTML = "Total = ???"
+  totalElementTwo.innerHTML = "Total = ???"
 }
 
 const getPokemonAgain = () => {
@@ -148,10 +156,13 @@ const getPokemonAgain = () => {
   stats2.innerHTML = ""
   type1.innerHTML = ""
   type2.innerHTML = ""
+  totalElementOne.innerHTML = "Total = ???"
+  totalElementTwo.innerHTML = "Total = ???"
   dropDown1.value = JSON.stringify(twoPokemon[0])
   dropDown2.value = JSON.stringify(twoPokemon[1])
   name1.innerHTML = twoPokemon[0].name
   name2.innerHTML = twoPokemon[1].name
+  document.getElementById("result").innerHTML = 'Which Pokemon is stronger?'
 }
 
 const displayStats = (pokemon, id) => {
@@ -171,8 +182,15 @@ const logFetch = () => {
 }
 
 const compareTwoBasic = () => {
+  poke1.src = twoPokemon[0].sprites.front_default
+  poke2.src = twoPokemon[1].sprites.front_default
+
   aPower = 0
   bPower = 0
+  let capilalizedNameOne = twoPokemon[0].name.charAt(0).toUpperCase() + twoPokemon[0].name.slice(1)
+  let capilalizedNameTwo = twoPokemon[1].name.charAt(0).toUpperCase() + twoPokemon[1].name.slice(1)
+
+
   for (let i = 0; i < twoPokemon[0].stats.length; i++) {
     aPower += twoPokemon[0].stats[i].base_stat
   }
@@ -181,26 +199,34 @@ const compareTwoBasic = () => {
   }
   // console.log(aPower + " vs " + bPower)
   if (aPower > bPower) {
-    result.innerHTML = twoPokemon[0].name + " is stronger than " + twoPokemon[1].name
+    result.innerHTML = capilalizedNameOne + " is stronger than " + capilalizedNameTwo + "."
     poke2.src = explosionGif
     setTimeout(
       function(){ 
-        poke2.src="";
-      }, 1400);
+        poke2.src = skullImg;
+      }, 1200);
   } else if (aPower < bPower) {
     poke1.src = explosionGif
     setTimeout(
       function(){ 
-        poke1.src="";
-      }, 1400);
-    result.innerHTML = twoPokemon[1].name + " is stronger than " + twoPokemon[0].name
+        poke1.src = skullImg;
+      }, 1200);
+    result.innerHTML = capilalizedNameTwo + " is stronger than " + capilalizedNameOne + "."
+    
   } else {
-    result.innerHTML = twoPokemon[0].name + " is just as strong as " + twoPokemon[0].name
+    result.innerHTML = capilalizedNameOne + " is just as strong as " + capilalizedNameTwo + "."
   }
+  totalElementOne.innerHTML = "Total = " + aPower
+  totalElementTwo.innerHTML = "Total = " + bPower
 }
 
 const compareTwoAdvanced = () => { 
-  console.log(twoPokemonTypes)
+  poke1.src = twoPokemon[0].sprites.front_default
+  poke2.src = twoPokemon[1].sprites.front_default
+
+  let capilalizedNameOne = twoPokemon[0].name.charAt(0).toUpperCase() + twoPokemon[0].name.slice(1)
+  let capilalizedNameTwo = twoPokemon[1].name.charAt(0).toUpperCase() + twoPokemon[1].name.slice(1)
+  // console.log(twoPokemonTypes)
   let pokeAStrength = twoPokemonTypes[0].damage_relations.double_damage_to
   let pokeAWeakness = twoPokemonTypes[0].damage_relations.half_damage_to
   let pokeBStrength = twoPokemonTypes[1].damage_relations.double_damage_to
@@ -213,6 +239,9 @@ const compareTwoAdvanced = () => {
   for (let i = 0; i < twoPokemon[1].stats.length; i++) {
     bPower += twoPokemon[1].stats[i].base_stat
   }
+  let aBasePower = aPower
+  let bBasePower = bPower
+
   // console.log(twoPokemon)
   for (let i = 0; i < pokeAStrength.length; i++) {
     for (let j = 0; j < twoPokemon[1].types.length; j++) {
@@ -248,20 +277,22 @@ const compareTwoAdvanced = () => {
   }
   console.log(aPower + " vs " + bPower)
   if (aPower > bPower) {
-    result.innerHTML = twoPokemon[0].name + " is stronger than " + twoPokemon[1].name
+    result.innerHTML = capilalizedNameOne + " is stronger than " + capilalizedNameTwo + "."
     poke2.src = explosionGif
     setTimeout(
       function(){ 
-        poke2.src="";
-      }, 1400);
+        poke2.src = skullImg;
+      }, 1200);
   } else if (aPower < bPower) {
-    result.innerHTML = twoPokemon[1].name + " is stronger than " + twoPokemon[0].name
+    result.innerHTML = capilalizedNameTwo + " is stronger than " + capilalizedNameOne + "."
     poke1.src = explosionGif
     setTimeout(
       function(){ 
-        poke1.src="";
-      }, 1400);
+        poke1.src = skullImg;
+      }, 1200);
   } else {
-    result.innerHTML = twoPokemon[0].name + " is just as strong as " + twoPokemon[0].name
+    result.innerHTML = capilalizedNameOne + " is just as strong as " + capilalizedNameTwo + "."
   }
+  totalElementOne.innerHTML = "Total = " + aBasePower + " => " + Math.trunc(aPower)
+  totalElementTwo.innerHTML = "Total = " + bBasePower + " => " + Math.trunc(bPower)
 }
