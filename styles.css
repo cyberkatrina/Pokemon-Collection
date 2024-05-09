@@ -14,18 +14,15 @@ ol, ul {
 }
 
 .mid {
-  text-wrap: wrap;
-  width: 40%;
+  width: 35%;
   display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
+  align-items: center;
   flex-direction: column;
 }
 
 .mid img {
-  height: 250px;
+  height: 200px;
   width: auto;
-  object-fit: cover;
 }
 
 .flex {
@@ -49,7 +46,6 @@ button {
   color: white; 
   border-radius: 8px;
   padding: 7px 20px;
-  /* height: 40px; */
 }
 
 button:hover {
@@ -64,10 +60,4 @@ img {
 
 img[src=""] {
   display: none;
-}
-
-.img-holder {
-  width: 200px;
-  height: 200px;
-  
 }
