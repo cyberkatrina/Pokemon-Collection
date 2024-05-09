@@ -113,6 +113,8 @@ const randomizeIndividual = (button) => {
   twoPokemon[button.name] = allPoke[randomPokeGen()]
   name1.innerHTML = twoPokemon[0].name
   name2.innerHTML = twoPokemon[1].name
+  totalElementOne.innerHTML = "Total = ???"
+  totalElementTwo.innerHTML = "Total = ???"
   getPokemonDetails()
   if (button.name == 0) {
     for (let i = 0; i < dropDown1.options.length; i++){
