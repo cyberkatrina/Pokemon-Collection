@@ -3,7 +3,14 @@ body {
   color: #2f2011;
   background-image: url("brick.avif");
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow-y: hidden;
+}
+
+h3, h1, h4 {
+  margin-bottom: 2pt;
+}
+
+ol, ul {
+  margin-top: 2pt;
 }
 
 .mid {
@@ -24,7 +31,7 @@ body {
 .flex {
   display: flex;
   justify-content: space-evenly;
-  padding-top: 10pt;
+  padding-top: 7pt;
 }
 
 #result {

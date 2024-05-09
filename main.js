@@ -19,8 +19,6 @@ let totalElementOne = document.getElementById("total-one")
 let totalElementTwo = document.getElementById("total-two")
 let timeouts = []
 
-
-
 window.onload = function() {
   getPokemon()
 }
@@ -184,13 +182,11 @@ const logFetch = () => {
 const compareTwoBasic = () => {
   poke1.src = twoPokemon[0].sprites.front_default
   poke2.src = twoPokemon[1].sprites.front_default
-
   aPower = 0
   bPower = 0
   let capilalizedNameOne = twoPokemon[0].name.charAt(0).toUpperCase() + twoPokemon[0].name.slice(1)
   let capilalizedNameTwo = twoPokemon[1].name.charAt(0).toUpperCase() + twoPokemon[1].name.slice(1)
-
-
+  
   for (let i = 0; i < twoPokemon[0].stats.length; i++) {
     aPower += twoPokemon[0].stats[i].base_stat
   }
