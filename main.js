@@ -7,6 +7,10 @@ let strengthBonus = 1.5
 let dropDown1 = document.getElementById('choice1');
 let dropDown2 = document.getElementById('choice2');
 let allPoke = []
+// let poke1 = document.getElementById("poke1")
+// let poke2 = document.getElementById("poke2")
+let explosionGif = "https://media.tenor.com/P6RWJwQW_YsAAAAi/explosion-gif.gif"
+// "https://i.gifer.com/YQDj.gif" this link was broken somehow
 
 
 window.onload = function() {
@@ -18,6 +22,17 @@ const randomPokeGen = () => {
   let randomPokeNum = Math.floor(Math.random() * max);
   return randomPokeNum
 }
+
+
+
+
+
+
+
+
+
+
+
 
 const getPokemon = () => {
   allPoke = []
@@ -48,7 +63,8 @@ const getPokemon = () => {
     .catch(err => console.log(`Error,  ${err}`))
     .then(pokemon => {
       allPoke.forEach(pokemon => {
-        let option1 = new Option(pokemon.name, JSON.stringify(pokemon))
+        //converts the pokemon obj into a string so it can be stored in the html as the .value
+        let option1 = new Option(pokemon.name, JSON.stringify(pokemon)) 
         let option2 = new Option(pokemon.name, JSON.stringify(pokemon))
         dropDown1.appendChild(option1)
         dropDown2.appendChild(option2)
@@ -63,6 +79,31 @@ const getPokemon = () => {
 const testOptions = () => {
   console.log(JSON.parse(dropDown1.value))
 }
+
+
+const randomizeIndividual = (button) => {
+  
+
+  twoPokemon[button.name] = allPoke[randomPokeGen()]
+  getPokemonDetails()
+  if (button.name == 0) {
+    for (let i = 0; i < dropDown1.options.length; i++){
+      if (JSON.parse(dropDown1.options[i].value).name == twoPokemon[0].name){
+          dropDown1.options[i].selected = true;
+          break;
+      }
+    } 
+  } else {
+    for (let i = 0; i < dropDown2.options.length; i++){
+      if (JSON.parse(dropDown2.options[i].value).name == twoPokemon[1].name){
+          dropDown2.options[i].selected = true;
+          break;
+      }
+    }
+  }
+}
+
+
 
 const changeValue = () => { 
   console.log("changing value")
@@ -113,7 +154,7 @@ const getPokemonDetails = () => {
   
 }
 
-const displayStats = (pokemon, id) => { //remove elements before adding more
+const displayStats = (pokemon, id) => {
   const stats = document.getElementById(`stats${id}`)
   stats.innerHTML = ''
 
@@ -127,9 +168,9 @@ const displayStats = (pokemon, id) => { //remove elements before adding more
 
 
 const getTypeDetails = (pokemon, index) => {
-  if (!twoPokemon[0].sprites.front_default || !twoPokemon[1].sprites.front_default) {
-    getPokemon()
-  }
+  // if (!twoPokemon[0].sprites.front_default || !twoPokemon[1].sprites.front_default) {
+  //   getPokemon()
+  // } //not sure what these 2 lines were for but they were breaking compareTwoAdvanced()
   let pokeA = pokemon.types
   for (let i = 0; i < pokeA.length; i++) {
     fetch(pokeA[i].type.url)
@@ -148,9 +189,10 @@ const getTypeDetails = (pokemon, index) => {
 }
 
 const logFetch = () => {
-  // console.log(twoPokemon)
+  console.log(twoPokemon)
   console.log(allPoke)
 }
+
 
 
 const compareTwoBasic = () => {
@@ -167,17 +209,17 @@ const compareTwoBasic = () => {
   console.log(aPower + " vs " + bPower)
   if (aPower > bPower) {
     console.log(twoPokemon[0].name + "is stronger than " + twoPokemon[1].name)
-    poke2.src = "https://i.gifer.com/YQDj.gif"
+    poke2.src = explosionGif
     setTimeout(
       function(){ 
         poke2.src="";
-      }, 2000);
+      }, 1400);
   } else if (aPower < bPower) {
-    poke1.src = "https://i.gifer.com/YQDj.gif"
+    poke1.src = explosionGif
     setTimeout(
       function(){ 
         poke1.src="";
-      }, 2000);
+      }, 1400);
     console.log(twoPokemon[1].name + "is stronger than " + twoPokemon[0].name)
   } else {
     console.log(twoPokemon[0].name + "is just as strong as " + twoPokemon[0].name)
@@ -186,8 +228,8 @@ const compareTwoBasic = () => {
 
 
 
-
-const compareTwoAdvanced = () => {
+const compareTwoAdvanced = () => { 
+  console.log(twoPokemonTypes)
   let pokeAStrength = twoPokemonTypes[0].damage_relations.double_damage_to
   let pokeAWeakness = twoPokemonTypes[0].damage_relations.half_damage_to
 
@@ -233,7 +275,7 @@ const compareTwoAdvanced = () => {
     }
   }
   for (let i = 0; i < pokeBWeakness.length; i++) {
-    for (let j = 0; j < twoPokemon[1].types.length; j++) {
+    for (let j = 0; j < twoPokemon[0].types.length; j++) {
       if (pokeBWeakness[i].name === twoPokemon[0].types[j].type.name) {
         bPower = bPower / strengthBonus
         console.log(twoPokemon[1].name + " is weak against " + twoPokemon[0].types[j].type.name)
@@ -245,10 +287,18 @@ const compareTwoAdvanced = () => {
   console.log(aPower + " vs " + bPower)
   if (aPower > bPower) {
     console.log(twoPokemon[0].name + " is stronger than " + twoPokemon[1].name)
-    poke2.src = "https://i.gifer.com/YQDj.gif"
+    poke2.src = explosionGif
+    setTimeout(
+      function(){ 
+        poke2.src="";
+      }, 1400);
   } else if (aPower < bPower) {
-    poke1.src = "https://i.gifer.com/YQDj.gif"
     console.log(twoPokemon[1].name + " is stronger than " + twoPokemon[0].name)
+    poke1.src = explosionGif
+    setTimeout(
+      function(){ 
+        poke1.src="";
+      }, 1400);
   } else {
     console.log(twoPokemon[0].name + " is just as strong as " + twoPokemon[0].name)
   }
