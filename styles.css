@@ -3,11 +3,22 @@ body {
   color: #2f2011;
   background-image: url("brick.avif");
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: hidden;
+}
+
+.mid {
+  text-wrap: wrap;
+  width: 40%;
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  flex-direction: column;
 }
 
 .mid img {
-  height: 150px;
+  height: 250px;
   width: auto;
+  object-fit: cover;
 }
 
 .flex {
@@ -46,4 +57,10 @@ img {
 
 img[src=""] {
   display: none;
+}
+
+.img-holder {
+  width: 200px;
+  height: 200px;
+  
 }
