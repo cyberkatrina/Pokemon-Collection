@@ -2,6 +2,7 @@ body {
   background-color: #FFD198;
   color: #2f2011;
   background-image: url("brick.avif");
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .mid img {
