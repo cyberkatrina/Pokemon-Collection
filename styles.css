@@ -1,3 +1,48 @@
+body {
+  background-color: #FFD198;
+  color: #2f2011;
+  background-image: url("brick.avif");
+}
+
+.mid img {
+  height: 150px;
+  width: auto;
+}
+
 .flex {
-  display: flex
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 10pt;
+}
+
+#result {
+  text-align: center;
+  padding-top: 20pt;
+}
+
+.buttons {
+  text-align: center;
+  padding-top: 15px;
+}
+
+button {
+  background-color: #C9701D; 
+  color: white; 
+  border-radius: 8px;
+  padding: 7px 20px;
+  /* height: 40px; */
+}
+
+button:hover {
+  color: #C9701D;
+  background-color: white;
+}
+
+img {
+  height: 200px;
+  width: auto;
+}
+
+img[src=""] {
+  display: none;
 }
