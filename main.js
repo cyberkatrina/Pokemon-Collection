@@ -101,6 +101,7 @@ const getTypeDetails = (pokemon, index) => {
       } return res.json()
     })
     .then(types => pokeA = types)
+    .then(types => twoPokemonTypes[index] = types)
     .catch(err => console.log(`Error,  ${err}`))
   }
 }
@@ -199,7 +200,7 @@ const compareTwoBasic = () => {
 }
 
 const compareTwoAdvanced = () => { 
-  // console.log(twoPokemonTypes)
+  console.log(twoPokemonTypes)
   let pokeAStrength = twoPokemonTypes[0].damage_relations.double_damage_to
   let pokeAWeakness = twoPokemonTypes[0].damage_relations.half_damage_to
   let pokeBStrength = twoPokemonTypes[1].damage_relations.double_damage_to
