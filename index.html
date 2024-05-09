@@ -8,14 +8,15 @@
 </head>
 <body>
   <button onclick="testOptions()">Test Options</button>
-  <button onclick="logGoodPokemon()">logFetch</button>
+  <button onclick="logFetch()">logFetch</button>
   <button onclick="getPokemonAgain()">Choose Two New Pokemon</button>
   <button onclick="compareTwoBasic()">Compare Chosen Pokemon(Basic)</button>
   <button onclick="compareTwoAdvanced()">Compare Chosen Pokemon(Advanced)</button>
   <div class="flex">
     <div class="1">
       <h2>Pokemon One</h2>
-      <select name="choice1" id="choice1" oninput="changeValue()"></select>
+      <button id="randomize-1" name="0" onclick="randomizeIndividual(this)">Randomize</button>
+      <select name="0" id="choice1" oninput="changeValue()"></select>
       <img src="" id="poke1">
       <div>
         <h3>All Stats</h3>
@@ -24,7 +25,8 @@
   </div>
   <div class="2">
     <h2>Pokemon Two</h2>
-    <select name="choice2" id="choice2" oninput="changeValue()"></select>
+    <button id="randomize-2" name="1" onclick="randomizeIndividual(this)">Randomize</button>
+    <select name="1" id="choice2" oninput="changeValue()"></select>
     <img src="" id="poke2">
     <div>
       <h3>All Stats</h3>
