@@ -40,19 +40,19 @@ const getPokemon = () => {
     .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()]))
     .then(pokemon => twoPokemon.push(allPoke[randomPokeGen()])) 
     .then(pokemon => {
-      name1.innerHTML = twoPokemon[0].name
-      name2.innerHTML = twoPokemon[1].name
+      name1.innerHTML = twoPokemon[0].name.charAt(0).toUpperCase() + twoPokemon[0].name.slice(1)
+      name2.innerHTML = twoPokemon[1].name.charAt(0).toUpperCase() + twoPokemon[1].name.slice(1)
       console.log(twoPokemon[0])
     })
-    .then(pokemon => dropDown1.appendChild(new Option(twoPokemon[0].name, JSON.stringify(twoPokemon[0]))))
-    .then(pokemon => dropDown2.appendChild(new Option(twoPokemon[1].name, JSON.stringify(twoPokemon[1]))))
+    .then(pokemon => dropDown1.appendChild(new Option(twoPokemon[0].name.charAt(0).toUpperCase() + twoPokemon[0].name.slice(1), JSON.stringify(twoPokemon[0]))))
+    .then(pokemon => dropDown2.appendChild(new Option(twoPokemon[1].name.charAt(0).toUpperCase() + twoPokemon[1].name.slice(1), JSON.stringify(twoPokemon[1]))))
     .then(pokemon => getPokemonDetails())
     .catch(err => console.log(`Error,  ${err}`))
     .then(pokemon => {
       allPoke.forEach(pokemon => {
         //converts the pokemon obj into a string so it can be stored in the html as the .value
-        let option1 = new Option(pokemon.name, JSON.stringify(pokemon)) 
-        let option2 = new Option(pokemon.name, JSON.stringify(pokemon))
+        let option1 = new Option(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1), JSON.stringify(pokemon)) 
+        let option2 = new Option(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1), JSON.stringify(pokemon))
         dropDown1.appendChild(option1)
         dropDown2.appendChild(option2)
       });
@@ -111,8 +111,8 @@ const getTypeDetails = (pokemon, index) => {
 
 const randomizeIndividual = (button) => {
   twoPokemon[button.name] = allPoke[randomPokeGen()]
-  name1.innerHTML = twoPokemon[0].name
-  name2.innerHTML = twoPokemon[1].name
+  name1.innerHTML = twoPokemon[0].name.charAt(0).toUpperCase() + twoPokemon[0].name.slice(1)
+  name2.innerHTML = twoPokemon[1].name.charAt(0).toUpperCase() + twoPokemon[1].name.slice(1)
   totalElementOne.innerHTML = "Total = ???"
   totalElementTwo.innerHTML = "Total = ???"
   getPokemonDetails()
@@ -139,8 +139,8 @@ const changeValue = () => {
   twoPokemon[0] = JSON.parse(dropDown1.value)
   twoPokemon[1] = JSON.parse(dropDown2.value)
   console.log(twoPokemon[0].url)
-  name1.innerHTML = twoPokemon[0].name
-  name2.innerHTML = twoPokemon[1].name
+  name1.innerHTML = twoPokemon[0].name.charAt(0).toUpperCase() + twoPokemon[0].name.slice(1)
+  name2.innerHTML = twoPokemon[1].name.charAt(0).toUpperCase() + twoPokemon[1].name.slice(1)
   getPokemonDetails()
   document.getElementById("result").innerHTML = 'Which Pokemon is stronger?'
   totalElementOne.innerHTML = "Total = ???"
