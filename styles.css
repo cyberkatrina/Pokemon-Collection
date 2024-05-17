@@ -58,6 +58,19 @@ img {
   width: auto;
 }
 
-img[src=""] {
-  display: none;
+/* Code to make the website responsive to mobile screen sizes */
+@media (max-width: 992px) { 
+
+  .mid img {
+    height: 100px;
+  }
+
+  .mid {
+    padding-right: 40px;
+  }
+
+  .buttons {
+    padding-left: 100px;
+  }
+
 }
