@@ -58,6 +58,30 @@ img {
   width: auto;
 }
 
+.one img {
+  animation-name: idle1;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+.two img {
+  animation-name: idle2;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes idle1 {
+  0% {transform: translateY(0);}
+  50% {transform: translateY(-15px);}
+  100% {transform: translateY(0);}
+}
+
+@keyframes idle2 {
+  0% {transform: translateY(-15px);}
+  50% {transform: translateY(0);}
+  100% {transform: translateY(-15px);}
+}
+
 /* Code to make the website responsive to mobile screen sizes */
 @media (max-width: 992px) { 
 
